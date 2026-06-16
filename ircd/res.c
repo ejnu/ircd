@@ -672,6 +672,11 @@ static	int	proc_answer(ResRQ *rptr, HEADER *hptr, char *buf, char *eob)
 				dr.s6_addr[10] = dr.s6_addr[11] = 0xff;
 				memcpy(dr.s6_addr+12, cp, 4);
 			}
+			if (adr >= &hp->h_addr_list[MAXADDRS - 1])
+			{
+				cp += dlen;
+				break;
+			}
 			bcopy(dr.s6_addr, adr->s6_addr, IN6ADDRSZ);
 			Debug((DEBUG_INFO,"got ip # %s for %s",
 				inet_ntop(AF_INET6, (char *)adr, ipv6string,
